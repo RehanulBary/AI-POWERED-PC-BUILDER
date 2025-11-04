@@ -1,0 +1,175 @@
+/* Page wrapper for sticky footer */
+.builder-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.pc-builder {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.super-mega-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+}
+
+.builder-container {
+  width: 100%;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #082d63;
+  margin: 0;
+}
+
+.total-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #ff8432, #ff8017);
+  padding: 6px 14px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  margin: 0;
+}
+
+.component-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.component-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 10px 12px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.component-card img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-right: 12px;
+}
+
+.component-info {
+  flex: 1;
+}
+
+.component-info p {
+  margin: 0;
+  line-height: 1.3;
+}
+
+.component-info .comp-title {
+  color: grey;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.component-info .required {
+  font-size: 10px;
+  background: #ffdddd;
+  color: #c00;
+  margin-left: 5px;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.component-info .name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.component-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.component-action .price {
+  color: #f10f0f;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+}
+
+.select-button {
+  background: #004aad;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 13px;
+}
+
+.select-button:hover {
+  background: #063b96;
+}
+
+/* 🔥 Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.stagger {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .builder-container {
+    padding: 15px;
+  }
+  
+  .title {
+    font-size: 20px;
+  }
+  
+  .component-card img {
+    width: 35px;
+    height: 35px;
+  }
+}

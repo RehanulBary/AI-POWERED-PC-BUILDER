@@ -1,0 +1,31 @@
+productid,brand,name,price,socket,clockspeed,cache,cores,threads,iGPU,imageURL
+CPU001,Intel,Intel Core i3-12100 12th Gen Alder Lake Processor,11500,LGA1700,3.30 GHz Up to 4.30 GHz,12MB,4,8,Yes,https://www.startech.com.bd/image/cache/catalog/processor/intel/i3-12100/i3-12100-228x228.jpg
+CPU002,Intel,Intel Core i5-12400F 12th Gen Alder Lake Processor,12500,LGA1700,2.50 GHz Up to 4.40 GHz,18MB,6,12,No,https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-12400/i5-12400-001-228x228.jpg
+CPU003,Intel,Intel Core i5-12500 12th Gen Alder Lake Processor,18500,LGA1700,3.00 GHz Up to 4.60 GHz,18MB,6,12,Yes,https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-12500/i5-12500-01-228x228.jpg
+CPU004,Intel,Intel Core i5-12600K 12th Gen Alder Lake Processor,25000,LGA1700,2.8 GHz Up to 4.9 GHz,20MB,10,16,Yes,https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-12600k/i5-12600k-01-228x228.jpg
+CPU005,Intel,Intel Core i7-12700K 12th Gen Alder Lake Processor,30200,LGA1700,3.60 GHz Up to 5.0 GHz,25MB,12,20,Yes,https://www.startech.com.bd/image/cache/catalog/processor/intel/i7-12700k/i7-12700k-01-228x228.jpg
+CPU006,Intel,Intel Core Ultra 5 245K Arrow Lake Processor,33500,LGA1851,3.6 GHz up to 5.2GHz,24 MB,14,14,Yes,https://www.startech.com.bd/image/cache/catalog/processor/intel/core-ultra-5-245k/intel-core-ultra-5-245k-processor-228x228.webp
+CPU007,Intel,Intel Core Ultra 7 265K Arrow Lake Processor,40500,LGA1851,3.3GHz up to 5.5GHz,30 MB,20,20,Yes,https://www.startech.com.bd/image/cache/catalog/processor/intel/core-ultra-7-265k/intel-core-ultra-7-265k-processor-228x228.webp
+CPU008,Intel,Intel Core Ultra 9 285K Arrow Lake Processor,70500,LGA1851,3.2GHz up to 5.7GHz,36 MB,24,24,Yes,https://www.startech.com.bd/image/cache/catalog/processor/intel/core-ultra-9-285k/intel-core-ultra-9-285k-processor-228x228.webp
+CPU009,AMD,AMD Ryzen 5 8400F Processor,11000,AM5,3.8GHz Up to 5.1GHz,3.8GHz Up to 5.1GHz,6,12,No,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-8400f/ryzen-5-8400f-01-228x228.webp
+CPU010,AMD,AMD Ryzen 5 7400F Processor,14800,AM5,3.7GHz Up to 4.7GHz,"L2 Cache: 6MB, L3 Cache: 32MB",6,12,No,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-7400f/ryzen-5-7400f-228x228.webp
+CPU011,AMD,AMD Ryzen 5 7500F Processor,15800,AM5,3.8GHz Up to 5.1GHz,"L2 Cache: 6MB, L3 Cache: 32MB",6,12,No,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-7600/ryzen-5-7600-01-228x228.webp
+CPU012,AMD,AMD Ryzen 5 7600 Processor,20700,AM5,3.8GHz Up to 5.1GHz,3.8GHz Up to 5.1GHz,6,12,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-7600/ryzen-5-7600-01-228x228.webp
+CPU013,AMD,AMD Ryzen 5 7700 Processor,23000,AM5,3.8GHz Up to 5.3GHz,"L2 Cache: 8MB, L3 Cache: 32MB",8,16,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-7-7700/ryzen-7-7700-01-228x228.webp
+CPU014,AMD,AMD Ryzen 5 8500G Processor with Radeon Graphics,21500,AM5,3.5GHz up to 5.0GHz,"L2 Cache: 6MB, L3 Cache: 16MB",6,12,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/8500g/8500g-01-228x228.webp
+CPU015,AMD,AMD Ryzen 7 8700G Processor with Radeon Graphics,29900,AM5,4.2GHz Up to 5.1GHz," 8MB, L3 Cache: 16MB",8,16,Yes,https://www.startech.com.bd/image/cache/catalog/processor/AMD/ryzen-7-8700g/ryzen-7-8700g-01-228x228.webp
+CPU016,AMD,AMD Ryzen 7 7600X Processor,21000,AM5,4.7GHz Up to 5.3GHz,"L2 Cache: 6MB, L3 Cache: 32MB",6,12,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-7600x/ryzen-5-7600x-01-228x228.webp
+CPU017,AMD,AMD Ryzen 7 7700X Processor,33000,AM5,4.5GHz Up to 5.4GHz,"L2 Cache: 8MB, L3 Cache: 32MB",8,16,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-7-7700x/ryzen-7-7700x-01-228x228.webp
+CPU018,AMD,AMD Ryzen 7 9900X Processor,39500,AM5,4.4GHz Up to 5.6GHz,"L1 Cache: 960KB, L2 Cache: 12MB, L3 Cache: 64MB",12,24,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-9900x/ryzen-9-9950x-228x228.webp
+CPU019,AMD,AMD Ryzen 7 7950X Processor,50500,AM5,4.5GHz Up to 5.7GHz,"L2 Cache: 16MB, L3 Cache: 64MB",16,32,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-7950x/ryzen-9-7950x-01-228x228.webp
+CPU020,AMD,AMD Ryzen 9 9950X3D Gaming Processor,83500,AM5,4.3GHz Up to 5.7GHz,128 MB,16,32,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-9950x3d/ryzen-9-9950x3d-01-228x228.webp
+CPU021,AMD,AMD Ryzen 9 9900X3D Gaming Processor,71000,AM5,4.4GHz Up to 5.5GHz,128 MB,12,24,Yes,https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-9900x3d/ryzen-9-9900x3d-228x228.webp
+CPU022,AMD,AMD Ryzen 9 7900X3D Gaming Processor,48500,AM5,4.4GHz Up to 5.6GHz,128 MB,12,24,Yes,https://www.startech.com.bd/image/cache/catalog/processor/AMD/ryzen-9-7900x3d/ryzen-9-7900x3d-01-228x228.webp
+CPU023,AMD,AMD Ryzen 9 9800X3D Gaming Processor,50500,AM5,4.7 GHz,96 MB,8,16,Yes,https://techlandbd.com/cache/images/uploads/products/P0592506113/cover_cache_optimize-70.webp
+CPU024,AMD,AMD Ryzen 9 7800X3D Gaming Processor,45500,AM5,4.2 GHz,96 MB,8,16,Yes,https://techlandbd.com/cache/images/uploads/products/P0592506057/cover_cache_optimize-70.webp
+CPU025,AMD,AMD Ryzen 5 5600 Processor,11500,AM4,3.5GHz up to 4.4GHz,"L2: 3MB, L3: 32MB; Cores-6 & Threads-12",6,12,No,
+CPU026,AMD,AMD Ryzen 5 5700X3D Processor,27500,AM4,Speed: 3.0GHz up to 4.1GHz,"Cache: L1: 512KB, L2: 4MB, L3: 96MB",8,16,No,
+CPU027,AMD,AMD Ryzen 5 5700X Processor,13000,AM4,Speed: 3.4GHz Up to 4.6GHz,"L2 Cache: 4MB, L3 Cache: 32MB",8,16,No,
+CPU028,AMD,AMD Ryzen 5 5600G Processor,13500,AM4,Speed: 3.9GHz up to 4.4GHz,"Cache: L2: 3MB, L3: 16MB",6,12,Yes,
+CPU029,AMD,AMD Ryzen 5 5700G Processor,15500,AM4,Speed: 3.8GHz up to 4.6GHz,"Cache: L2: 4MB, L3: 16MB",8,16,Yes,
+CPU030,AMD,AMD Ryzen 5 5900X Processor,30000,AM4,Speed: 3.7GHz Up to 4.8GHz,"L2 Cache: 6MB, L3 Cache: 64MB",12,24,No,

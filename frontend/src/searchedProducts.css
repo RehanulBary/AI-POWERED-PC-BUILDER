@@ -1,0 +1,19 @@
+.your_search {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.whole-search {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.searchedp {
+    width: 100%;
+    max-width: 1200px;
+}

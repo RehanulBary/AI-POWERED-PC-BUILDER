@@ -1,0 +1,21 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-footer {
+  background: linear-gradient(90deg, rgb(12, 20, 36) 60%, #1a233a 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  color: #fff;
+  text-align: center;
+  padding: 2px;
+  font-size: 14px;
+  margin-top: auto;
+}

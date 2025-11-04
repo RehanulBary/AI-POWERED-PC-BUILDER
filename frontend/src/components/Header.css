@@ -1,0 +1,150 @@
+/* src/Header.css */
+
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, rgb(12,20,36) 60%, #1a233a 100%);
+    padding: 15px 7%;
+    height: 80px;
+}
+
+.logo {
+    width: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+ul {
+    flex: 1;
+    list-style: none;
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🔥 Enhanced menu items with hover effects */
+ul li {
+    display: inline-block;
+    margin: 10px 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    cursor: pointer;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* 🔥 Hover effect with scaling and background */
+ul li:hover {
+    color: #32d9ff;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 132, 50, 0.2);
+}
+
+/* 🔥 Optional: Underline animation */
+ul li::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 2px;
+    left: 50%;
+    background: linear-gradient(90deg, #e7e8ec, #e8e9eb);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+ul li:hover::after {
+    width: 80%;
+}
+
+/* 🔥 Active/clicked state */
+ul li:active {
+    transform: scale(1.05);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 4px 15px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.search-box:hover {
+    box-shadow: 0 4px 12px rgba(255, 132, 50, 0.3);
+    transform: translateY(-2px);
+}
+
+.search-box input {
+    padding: 1px 2px;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: #1a233a;
+    font-size: 18px;
+    max-width: 150px;
+}
+
+.search-box img {
+    height: 40px;
+    width: 40px;
+    transition: transform 0.3s ease;
+}
+
+.search-box ::placeholder {
+    color: #1a233a;
+}
+
+.search_icon:hover {
+    cursor: pointer;
+    transform: scale(1.2) rotate(15deg);
+    transition-duration: 0.3s;
+}
+
+/* 🔥 Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 5%;
+        gap: 15px;
+    }
+
+    ul li {
+        margin: 8px 10px;
+        font-size: 16px;
+    }
+
+    .search-box input {
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    ul li {
+        margin: 5px;
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}

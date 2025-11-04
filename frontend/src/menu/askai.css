@@ -1,0 +1,270 @@
+/* --- Page Wrapper for Sticky Footer --- */
+.askai-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- General Styles and Layout --- */
+.askai-main {
+  background-color: #f8f9fa;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.generator-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  max-height: 80vh;
+  overflow-y: auto;
+  
+  /* 🔥 Fade-in animation on load */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* --- Typography --- */
+.generator-container h1 {
+  font-size: 2rem;
+  color: #082d63;
+  margin-bottom: 8px;
+  font-weight: 700;
+  
+  /* Stagger animation */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.1s;
+}
+
+.generator-container p {
+  color: grey;
+  margin-bottom: 25px;
+  font-size: 1rem;
+  
+  /* Stagger animation */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.2s;
+}
+
+/* --- Form Styling --- */
+.build-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  
+  /* Stagger animation */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #082d63;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 14px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fafafa;
+  -moz-appearance: textfield;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #004aad;
+  box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.15);
+  outline: none;
+  background-color: #ffffff;
+}
+
+.form-group input::-webkit-outer-spin-button,
+.form-group input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* --- Button Styling --- */
+.build-form button {
+  padding: 12px 24px;
+  background: #004aad;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s, box-shadow 0.2s;
+  margin-top: 8px;
+}
+
+.build-form button:hover:not(:disabled) {
+  background: #063b96;
+  box-shadow: 0 6px 15px rgba(0, 74, 173, 0.3); 
+}
+
+.build-form button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.build-form button:disabled {
+  background: #cccccc;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+/* --- Result and Status Styling --- */
+.result-container {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #eaeaea;
+  text-align: left;
+}
+
+.error-message {
+  color: #c00;
+  background-color: #ffdddd;
+  border: 1px solid #ffcccc;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.95rem;
+  
+  /* Fade-in animation */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.build-result {
+  background-color: #f0f8ff;
+  border: 1px solid #d0e8ff;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.build-result h3 {
+  color: #004aad;
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #b3d9ff;
+  padding-bottom: 6px;
+}
+
+.build-result pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #333;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* --- Loading Indicator Animation --- */
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 0;
+  
+  /* Fade-in animation */
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #ff8432, #ff8017);
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* 🔥 Fade + Stagger Animations */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-height: 700px) {
+  .generator-container {
+    padding: 20px;
+    max-height: 70vh;
+  }
+  
+  .generator-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+  }
+  
+  .generator-container p {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  
+  .build-form {
+    gap: 15px;
+  }
+}
