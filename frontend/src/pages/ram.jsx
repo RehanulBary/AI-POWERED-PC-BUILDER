@@ -2,30 +2,23 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./mobo.css";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBuilder } from "../BuilderContext.jsx";
 
 function Ram() {
   const { addToBuilder, removeFromBuilder, builder } = useBuilder();
+  const navigate = useNavigate();
 
   const [items, setItems] = useState([]);
   const [sortOrder, setSortOrder] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
   const [filters, setFilters] = useState({
     brand: [],
-    price: "",
     type: [],
     capacity: [],
   });
 
-  const brandOptions = [
-    "Corsair",
-    "Kingston",
-    "ADATA",
-    "TeamGroup",
-    "G.Skill",
-    "Patriot",
-  ];
+  const brandOptions = ["Corsair", "Kingston", "ADATA", "TeamGroup", "G.Skill", "Patriot"];
   const typeOptions = ["DDR4", "DDR5"];
   const capacityOptions = ["8GB", "16GB", "32GB", "64GB", "128GB"];
 
@@ -33,9 +26,7 @@ function Ram() {
     const fetchItems = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/ram");
-        if (!response.ok) {
-          throw new Error("Not Ok");
-        }
+        if (!response.ok) throw new Error("Not Ok");
         const data = await response.json();
         setItems(data);
       } catch (err) {
@@ -47,43 +38,27 @@ function Ram() {
 
   const handleFilterChange = (type, value) => {
     setFilters((prev) => {
-      if (type === "brand" || type === "type" || type === "capacity") {
-        const arr = prev[type].includes(value)
-          ? prev[type].filter((v) => v !== value)
-          : [...prev[type], value];
-        return { ...prev, [type]: arr };
-      }
-      return prev;
+      const arr = prev[type].includes(value)
+        ? prev[type].filter((v) => v !== value)
+        : [...prev[type], value];
+      return { ...prev, [type]: arr };
     });
   };
 
-  const handleSortChange = (order) => {
-    setSortOrder(order);
-  };
-
-  const handleLearnMore = (ram) => {
-    setSelectedItem(ram);
-  };
-
-  const handleClosePopup = () => {
-    setSelectedItem(null);
-  };
+  const handleSortChange = (order) => setSortOrder(order);
+  const handleLearnMore = (ram) => setSelectedItem(ram);
+  const handleClosePopup = () => setSelectedItem(null);
 
   const filteredItems = items.filter((item) => {
-    if (filters.brand.length && !filters.brand.includes(item.brand))
-      return false;
+    if (filters.brand.length && !filters.brand.includes(item.brand)) return false;
     if (filters.type.length && !filters.type.includes(item.type)) return false;
-    if (filters.capacity.length && !filters.capacity.includes(item.capacity))
-      return false;
+    if (filters.capacity.length && !filters.capacity.includes(item.capacity)) return false;
     return true;
   });
 
   const sortedItems = [...filteredItems].sort((a, b) => {
-    if (sortOrder === "asc") {
-      return Number(a.price) - Number(b.price);
-    } else if (sortOrder === "desc") {
-      return Number(b.price) - Number(a.price);
-    }
+    if (sortOrder === "asc") return Number(a.price) - Number(b.price);
+    if (sortOrder === "desc") return Number(b.price) - Number(a.price);
     return 0;
   });
 
@@ -94,14 +69,13 @@ function Ram() {
   return (
     <>
       <Header />
-      <h2 className="item-title">Ram List</h2>
+      <h2 className="item-title">Memory (RAM)</h2>
       <div className="item-main-layout">
         <aside className="item-filter-section">
           <h4>Filter</h4>
 
-          {/* type Filter */}
           <div className="filter-group">
-            <span className="filter-label">type</span>
+            <span className="filter-label">Type</span>
             {typeOptions.map((type) => (
               <label key={type} className="filter-checkbox">
                 <input
@@ -109,12 +83,11 @@ function Ram() {
                   checked={filters.type.includes(type)}
                   onChange={() => handleFilterChange("type", type)}
                 />
-                {type}
+                <span>{type}</span>
               </label>
             ))}
           </div>
 
-          {/* Brand Filter */}
           <div className="filter-group">
             <span className="filter-label">Brand</span>
             {brandOptions.map((brand) => (
@@ -124,12 +97,11 @@ function Ram() {
                   checked={filters.brand.includes(brand)}
                   onChange={() => handleFilterChange("brand", brand)}
                 />
-                {brand}
+                <span>{brand}</span>
               </label>
             ))}
           </div>
 
-          {/* Capacity Filter */}
           <div className="filter-group">
             <span className="filter-label">Capacity</span>
             {capacityOptions.map((capacity) => (
@@ -139,18 +111,15 @@ function Ram() {
                   checked={filters.capacity.includes(capacity)}
                   onChange={() => handleFilterChange("capacity", capacity)}
                 />
-                {capacity}
+                <span>{capacity}</span>
               </label>
             ))}
           </div>
         </aside>
 
-        {/* List Section */}
         <main className="list-section">
           <div className="sort-dropdown">
-            <label htmlFor="sortOrder" className="sort-label">
-              Sort by:
-            </label>
+            <label htmlFor="sortOrder" className="sort-label">Sort by:</label>
             <select
               id="sortOrder"
               value={sortOrder}
@@ -171,60 +140,83 @@ function Ram() {
                   alt={item.name}
                 />
                 <h3>{item.name}</h3>
-                <p>Brand: {item.brand}</p>
-                <p>Capacity: {item.capacity}</p>
-                <p>Type: {item.type}</p>
+                <p><strong>Brand:</strong> {item.brand}</p>
+                <p><strong>Capacity:</strong> {item.capacity}</p>
+                <p><strong>Type:</strong> {item.type}</p>
+                <p><strong>Speed:</strong> {item.frequency}MHz</p>
                 <p className="price-of-product">
-                  Price: <span className="item-price">৳{item.price}</span>
+                  <span className="item-price">৳{item.price}</span>
                 </p>
-
-                <Link to={"/builder"}>
+                <div className="card-actions">
                   <button
-                    className="add-to-builder-btn"
+                    className="add-to-builder-btnn"
                     onClick={() => {
                       removeFromBuilder("ram");
                       addToBuilder("ram", item);
+                      navigate("/builder");
                     }}
                   >
                     Add to Builder
                   </button>
-                </Link>
-                <button
-                  className="learn-more-btn"
-                  onClick={() => handleLearnMore(item)}
-                >
-                  Learn More
-                </button>
+                  <button
+                    className="learn-more-btn"
+                    onClick={() => handleLearnMore(item)}
+                  >
+                    Details
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </main>
       </div>
 
-      {/* Popup */}
       {selectedItem && (
-        <div className="item-popup-overlay" onClick={handleClosePopup}>
-          <div className="item-popup" onClick={(e) => e.stopPropagation()}>
+        <div 
+          className="item-popup-overlay active" 
+          onClick={handleClosePopup}
+        >
+          <div 
+            className="item-popup" 
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className="close-popup-btn" onClick={handleClosePopup}>
-              ×
+              ✕
             </button>
             <div className="item-popup-content">
               <img
                 src={`http://localhost:3000/images/by-id/${selectedItem.productid}`}
                 alt={selectedItem.name}
-                className="ram-popup-img"
+                className="item-popup-img"
               />
               <div className="item-popup-info">
                 <h3>{selectedItem.name}</h3>
-                <p>Brand: {selectedItem.brand}</p>
-                <p>Capacity: {selectedItem.capacity}</p>
-                <p>Type: {selectedItem.type}</p>
-                <p>Speed: {selectedItem.frequency}</p>
-                <p>CAS Latency: {selectedItem.caslatency}</p>
-                <p className="price-of-product">
-                  Price:{" "}
-                  <span className="item-price">৳{selectedItem.price}</span>
-                </p>
+                <p><strong>Brand:</strong> {selectedItem.brand}</p>
+                <p><strong>Capacity:</strong> {selectedItem.capacity}</p>
+                <p><strong>Type:</strong> {selectedItem.type}</p>
+                <p><strong>Speed:</strong> {selectedItem.frequency}MHz</p>
+                <p><strong>CAS Latency:</strong> {selectedItem.caslatency}</p>
+                <p><strong>Voltage:</strong> 1.35V</p>
+                <p className="item-popup-price">৳{selectedItem.price}</p>
+                
+                <div className="item-popup-actions">
+                  <button 
+                    className="learn-more-btn"
+                    onClick={handleClosePopup}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="add-to-builder-btnn"
+                    onClick={() => {
+                      removeFromBuilder("ram");
+                      addToBuilder("ram", selectedItem);
+                      navigate("/builder");
+                    }}
+                  >
+                    Add to Builder
+                  </button>
+                </div>
               </div>
             </div>
           </div>

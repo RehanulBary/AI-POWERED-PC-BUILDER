@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBuilder } from "../BuilderContext.jsx";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import "./cpu.css";
+import "./mobo.css";
 
 function CPU() {
+  const navigate = useNavigate();
   const { addToBuilder, removeFromBuilder } = useBuilder();
+
   const [cpus, setCpus] = useState([]);
   const [selectedCpu, setSelectedCpu] = useState(null);
-  const [sortOrder, setSortOrder] = useState(""); // "asc" or "desc"
+  const [sortOrder, setSortOrder] = useState("");
   const [filters, setFilters] = useState({
     cores: [],
     brand: [],
     price: "",
     socket: [],
   });
+
   const coreOptions = [4, 6, 8, 12, 16];
   const brandOptions = ["Intel", "AMD"];
   const socketOptions = ["AM4", "AM5", "LGA1700", "LGA1851"];
@@ -26,35 +29,22 @@ function CPU() {
     { label: "৳60,000 - ৳100,000", value: "60-100" },
   ];
 
+  // Fetch CPUs
   useEffect(() => {
     const fetchCpus = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/cpu");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+        if (!response.ok) throw new Error("Failed to fetch CPUs");
         const data = await response.json();
         setCpus(data);
       } catch (err) {
         console.error("Error fetching CPUs:", err);
       }
     };
-
     fetchCpus();
   }, []);
 
-  const handleLearnMore = (cpu) => {
-    setSelectedCpu(cpu);
-  };
-
-  const handleClosePopup = () => {
-    setSelectedCpu(null);
-  };
-
-  const handleSortChange = (order) => {
-    setSortOrder(order);
-  };
-
+  // Filter handling
   const handleFilterChange = (type, value) => {
     setFilters((prev) => {
       if (type === "cores" || type === "brand" || type === "socket") {
@@ -70,6 +60,11 @@ function CPU() {
     });
   };
 
+  const handleSortChange = (order) => setSortOrder(order);
+  const handleLearnMore = (cpu) => setSelectedCpu(cpu);
+  const handleClosePopup = () => setSelectedCpu(null);
+
+  // Apply filters
   const filteredCpus = cpus.filter((cpu) => {
     if (filters.cores.length && !filters.cores.includes(cpu.cores))
       return false;
@@ -91,22 +86,23 @@ function CPU() {
     return true;
   });
 
+  // Sort items
   const sortedCpus = [...filteredCpus].sort((a, b) => {
-    if (sortOrder === "asc") {
-      return a.price - b.price;
-    } else if (sortOrder === "desc") {
-      return b.price - a.price;
-    }
+    if (sortOrder === "asc") return a.price - b.price;
+    if (sortOrder === "desc") return b.price - a.price;
     return 0;
   });
 
   return (
     <>
       <Header />
-      <h2 className="cpu-title">CPU List</h2>
-      <div className="cpu-main-layout">
-        <aside className="cpu-filter-section">
+      <h2 className="item-title">Processors (CPU)</h2>
+
+      <div className="item-main-layout">
+        {/* Filter Sidebar */}
+        <aside className="item-filter-section">
           <h4>Filter</h4>
+
           <div className="filter-group">
             <span className="filter-label">Cores</span>
             {coreOptions.map((core) => (
@@ -116,10 +112,11 @@ function CPU() {
                   checked={filters.cores.includes(core)}
                   onChange={() => handleFilterChange("cores", core)}
                 />
-                {core}
+                <span>{core}</span>
               </label>
             ))}
           </div>
+
           <div className="filter-group">
             <span className="filter-label">Brand</span>
             {brandOptions.map((brand) => (
@@ -129,10 +126,11 @@ function CPU() {
                   checked={filters.brand.includes(brand)}
                   onChange={() => handleFilterChange("brand", brand)}
                 />
-                {brand}
+                <span>{brand}</span>
               </label>
             ))}
           </div>
+
           <div className="filter-group">
             <span className="filter-label">Socket</span>
             {socketOptions.map((socket) => (
@@ -142,12 +140,13 @@ function CPU() {
                   checked={filters.socket.includes(socket)}
                   onChange={() => handleFilterChange("socket", socket)}
                 />
-                {socket}
+                <span>{socket}</span>
               </label>
             ))}
           </div>
+
           <div className="filter-group">
-            <span className="filter-label">Price</span>
+            <span className="filter-label">Price Range</span>
             {priceOptions.map((opt) => (
               <label key={opt.value} className="filter-radio">
                 <input
@@ -156,12 +155,14 @@ function CPU() {
                   checked={filters.price === opt.value}
                   onChange={() => handleFilterChange("price", opt.value)}
                 />
-                {opt.label}
+                <span>{opt.label}</span>
               </label>
             ))}
           </div>
         </aside>
-        <main className="cpu-list-section">
+
+        {/* Main Content */}
+        <main className="list-section">
           <div className="sort-dropdown">
             <label htmlFor="sortOrder" className="sort-label">
               Sort by:
@@ -177,70 +178,108 @@ function CPU() {
               <option value="desc">Price (High to Low)</option>
             </select>
           </div>
-          <div className="cpu-container">
+
+          <div className="list-container">
             {sortedCpus.map((cpu) => (
-              <div key={cpu.productid} className="cpu-card">
+              <div className="item-card" key={cpu.productid}>
                 <img
                   src={`http://localhost:3000/images/by-id/${cpu.productid}`}
                   alt={cpu.name}
                 />
+
                 <h3>{cpu.name}</h3>
-                <p>Socket: {cpu.socket}</p>
-                <p>Cores: {cpu.cores}</p>
-                <p>Threads: {cpu.threads}</p>
+                <p><strong>Brand:</strong> {cpu.brand}</p>
+                <p><strong>Socket:</strong> {cpu.socket}</p>
+                <p><strong>Cores:</strong> {cpu.cores}</p>
+                <p><strong>Threads:</strong> {cpu.threads}</p>
+
                 <p className="price-of-product">
-                  Price: <span className="cpu-price">৳{cpu.price}</span>
+                  <span className="item-price">৳{cpu.price}</span>
                 </p>
-                <Link to={'/builder'}><button
-                  className="add-to-builder-btn"
-                  onClick={() => {
-                    removeFromBuilder("cpu");
-                    removeFromBuilder("mobo");
-                    removeFromBuilder("ram");
-                    addToBuilder("cpu", cpu);
-                  }}
-                >
-                  Add to Builder
-                </button></Link>
-                <button
-                  className="learn-more-btn"
-                  onClick={() => handleLearnMore(cpu)}
-                >
-                  Learn More
-                </button>
+
+                <div className="card-actions">
+                  <button
+                    className="add-to-builder-btnn"
+                    onClick={() => {
+                      removeFromBuilder("cpu");
+                      removeFromBuilder("mobo");
+                      removeFromBuilder("ram");
+                      addToBuilder("cpu", cpu);
+                      navigate("/builder");
+                    }}
+                  >
+                    Add to Builder
+                  </button>
+                  <button
+                    className="learn-more-btn"
+                    onClick={() => handleLearnMore(cpu)}
+                  >
+                    Details
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </main>
       </div>
-      {selectedCpu && (
-        <div className="cpu-popup-overlay" onClick={handleClosePopup}>
-          <div className="cpu-popup" onClick={(e) => e.stopPropagation()}>
+
+      {/* Popup Modal */}
+      <div
+        className={`item-popup-overlay ${selectedCpu ? "active" : ""}`}
+        onClick={handleClosePopup}
+      >
+        {selectedCpu && (
+          <div
+            className="item-popup"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className="close-popup-btn" onClick={handleClosePopup}>
               ×
             </button>
-            <div className="cpu-popup-content">
+
+            <div className="item-popup-content">
               <img
                 src={`http://localhost:3000/images/by-id/${selectedCpu.productid}`}
                 alt={selectedCpu.name}
-                className="cpu-popup-img"
+                className="item-popup-img"
               />
-              <div className="cpu-popup-info">
+              <div className="item-popup-info">
                 <h3>{selectedCpu.name}</h3>
-                <p>Brand: {selectedCpu.brand}</p>
-                <p>Socket: {selectedCpu.socket}</p>
-                <p>Clock Speed: {selectedCpu.clockspeed}</p>
-                <p>Cores: {selectedCpu.cores}</p>
-                <p>Threads: {selectedCpu.threads}</p>
-                <p>Cache: {selectedCpu.cache}</p>
-                <p className="price-of-product">
-                  Price: <span className="cpu-price">৳{selectedCpu.price}</span>
-                </p>
+                <p><strong>Brand:</strong> {selectedCpu.brand}</p>
+                <p><strong>Socket:</strong> {selectedCpu.socket}</p>
+                <p><strong>Cores:</strong> {selectedCpu.cores}</p>
+                <p><strong>Threads:</strong> {selectedCpu.threads}</p>
+                <p><strong>Clock Speed:</strong> {selectedCpu.clockspeed}</p>
+                <p><strong>Cache:</strong> {selectedCpu.cache}</p>
+
+                <p className="item-popup-price">৳{selectedCpu.price}</p>
+
+                <div className="item-popup-actions">
+                  <button
+                    className="learn-more-btn"
+                    onClick={handleClosePopup}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="add-to-builder-btnn"
+                    onClick={() => {
+                      removeFromBuilder("cpu");
+                      removeFromBuilder("mobo");
+                      removeFromBuilder("ram");
+                      addToBuilder("cpu", selectedCpu);
+                      navigate("/builder");
+                    }}
+                  >
+                    Add to Builder
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
       <Footer />
     </>
   );

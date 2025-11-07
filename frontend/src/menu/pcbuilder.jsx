@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useBuilder } from "../BuilderContext";
 
 export default function Builder() {
-  const { builder } = useBuilder();
+  const { builder, clearBuilder } = useBuilder();
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -22,7 +22,6 @@ export default function Builder() {
       if (component && component.price) total += parseInt(component.price, 10);
     });
     setTotalPrice(total);
-    console.log(builder);
   }, [builder]);
 
   return (
@@ -31,13 +30,21 @@ export default function Builder() {
       <div className="super-mega-container">
         <div className="builder-container fade-in">
           <div className="title-container">
-            <p className="title">Build Your own PC</p>
+            <div className="title-left">
+              <p className="title">Build Your Own PC</p>
+              <button className="clear-build-btn" onClick={clearBuilder}>
+                ⟳ Clear Build
+              </button>
+            </div>
             <p className="total-price">৳{totalPrice}</p>
           </div>
 
           <div className="component-list">
             {/* CPU */}
-            <div className="component-card stagger" style={{ animationDelay: "0.1s" }}>
+            <div
+              className="component-card stagger"
+              style={{ animationDelay: "0.1s" }}
+            >
               <img src={cpuIcon} alt="CPU Icon" />
               <div className="component-info">
                 <p className="comp-title">
@@ -54,7 +61,10 @@ export default function Builder() {
             </div>
 
             {/* Motherboard */}
-            <div className="component-card stagger" style={{ animationDelay: "0.2s" }}>
+            <div
+              className="component-card stagger"
+              style={{ animationDelay: "0.2s" }}
+            >
               <img src={motherboardIcon} alt="MOBO Icon" />
               <div className="component-info">
                 <p className="comp-title">
@@ -71,7 +81,10 @@ export default function Builder() {
             </div>
 
             {/* RAM */}
-            <div className="component-card stagger" style={{ animationDelay: "0.3s" }}>
+            <div
+              className="component-card stagger"
+              style={{ animationDelay: "0.3s" }}
+            >
               <img src={ramIcon} alt="RAM Icon" />
               <div className="component-info">
                 <p className="comp-title">
@@ -88,7 +101,10 @@ export default function Builder() {
             </div>
 
             {/* SSD */}
-            <div className="component-card stagger" style={{ animationDelay: "0.4s" }}>
+            <div
+              className="component-card stagger"
+              style={{ animationDelay: "0.4s" }}
+            >
               <img src={ssdIcon} alt="SSD Icon" />
               <div className="component-info">
                 <p className="comp-title">Storage</p>
@@ -103,7 +119,10 @@ export default function Builder() {
             </div>
 
             {/* GPU */}
-            <div className="component-card stagger" style={{ animationDelay: "0.5s" }}>
+            <div
+              className="component-card stagger"
+              style={{ animationDelay: "0.5s" }}
+            >
               <img src={gpuIcon} alt="GPU Icon" />
               <div className="component-info">
                 <p className="comp-title">Graphics Card</p>
@@ -118,7 +137,10 @@ export default function Builder() {
             </div>
 
             {/* PSU */}
-            <div className="component-card stagger" style={{ animationDelay: "0.6s" }}>
+            <div
+              className="component-card stagger"
+              style={{ animationDelay: "0.6s" }}
+            >
               <img src={psuIcon} alt="PSU Icon" />
               <div className="component-info">
                 <p className="comp-title">Power Supply</p>
@@ -133,7 +155,10 @@ export default function Builder() {
             </div>
 
             {/* Case */}
-            <div className="component-card stagger" style={{ animationDelay: "0.7s" }}>
+            <div
+              className="component-card stagger"
+              style={{ animationDelay: "0.7s" }}
+            >
               <img src={caseIcon} alt="Case Icon" />
               <div className="component-info">
                 <p className="comp-title">Casing</p>

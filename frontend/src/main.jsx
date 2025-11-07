@@ -11,13 +11,11 @@ import Ram from "./pages/ram";
 import SSD from "./pages/ssd";
 import GPU from "./pages/gpu";
 import PSU from "./pages/psu";
-import Monitor from "./pages/monitor";
-import Keyboard from "./pages/keyboard";
 import Case from "./pages/case";
 import AskAI from "./menu/askai";
 import Builder from "./menu/pcbuilder";
 import SearchedProducts from "./SearchedProducts.jsx";
-import GlobalSearch from "./menu/GlobalSearch.jsx"; // ✅ Only one import
+import GlobalSearch from "./menu/GlobalSearch.jsx"; 
 
 const router = createBrowserRouter([
   {
@@ -48,14 +46,6 @@ const router = createBrowserRouter([
   {
     path: "/PSU",
     element: <PSU />,
-  },
-  {
-    path: "/Monitor",
-    element: <Monitor />,
-  },
-  {
-    path: "/Keyboard-Mouse",
-    element: <Keyboard />,
   },
   {
     path: "/Case",
