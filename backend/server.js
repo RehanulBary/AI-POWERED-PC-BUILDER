@@ -1,9 +1,6 @@
-/**
- * BD PC Builder & Price Comparison API
- * Server File
- * Author: Rehanul Bary
- * Version: 2.0.0
- */
+// PC Builder
+// Server File
+// Author: Rehanul Bary
 
 const mysql = require('mysql2');
 const express = require('express');
@@ -23,6 +20,7 @@ app.use(express.json());
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Directory for storing product images
+// __dirname is a special variable that gives the absolute path of the current file’s directory.
 const IMAGE_DIR = path.join(__dirname, 'public/images');
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
 
@@ -284,7 +282,9 @@ Total: "[total] taka"
 `;
 
     const result = await model.generateContent(structuredPrompt);
+    console.log(result)
     const response = await result.response;
+    console.log(response)
     const reply = response.text();
 
     res.json({ reply });
@@ -342,8 +342,8 @@ app.get("/search/:query", async (req, res) => {
 app.get("/", (req, res) => {
   res.json({
     status: "API Running",
-    message: "BD PC Builder & Price Comparison API",
-    version: "2.0.0",
+    message: "PC Builder",
+    version: "1.0.0",
     database: db.state === 'authenticated' ? 'Connected' : 'Disconnected',
     activeSites: sites.map(s => ({ name: s.name, color: s.color, url: s.url("test").split('?')[0] }))
   });

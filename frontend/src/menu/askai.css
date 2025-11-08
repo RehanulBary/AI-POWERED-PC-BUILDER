@@ -1,11 +1,11 @@
-/* --- Page Wrapper for Sticky Footer --- */
+/* Page Wrapper for Sticky Footer  */
 .askai-page-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* --- General Styles and Layout --- */
+/* General Styles and Layout  */
 .askai-main {
   background-color: #f8f9fa;
   flex: 1;
@@ -27,13 +27,13 @@
   max-height: 80vh;
   overflow-y: auto;
   
-  /* 🔥 Fade-in animation on load */
+  /*  Fade-in animation on load */
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.6s ease forwards;
 }
 
-/* --- Typography --- */
+/*  Typography  */
 .generator-container h1 {
   font-size: 2rem;
   color: #082d63;
@@ -59,7 +59,7 @@
   animation-delay: 0.2s;
 }
 
-/* --- Form Styling --- */
+/*  Form Styling */
 .build-form {
   display: flex;
   flex-direction: column;
@@ -111,7 +111,7 @@
   margin: 0;
 }
 
-/* --- Button Styling --- */
+/* Button Styling */
 .build-form button {
   padding: 12px 24px;
   background: #004aad;
@@ -141,7 +141,7 @@
   opacity: 0.9;
 }
 
-/* --- Result and Status Styling --- */
+/* Result and Status Styling */
 .result-container {
   margin-top: 30px;
   padding-top: 15px;
@@ -195,7 +195,7 @@
   margin: 0;
 }
 
-/* --- Loading Indicator Animation --- */
+/* Loading Indicator Animation */
 .loading-indicator {
   display: flex;
   justify-content: center;
@@ -239,7 +239,7 @@
   }
 }
 
-/* 🔥 Fade + Stagger Animations */
+/* Fade + Stagger Animations */
 @keyframes fadeInUp {
   to {
     opacity: 1;

@@ -51,7 +51,6 @@ export default function AskAI() {
   }
 
   function parseBuildToContext(buildText) {
-    // 🔥 FIX: Changed split("") to split("")
     const lines = buildText.split("\n").map(line => line.trim()).filter(Boolean);
 
     lines.forEach(line => {

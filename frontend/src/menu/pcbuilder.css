@@ -1,11 +1,10 @@
-/* Sticky Footer Layout */
+/* pcbuider.css */
 .builder-page-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Wrapper */
 .super-mega-container {
   flex: 1;
   display: flex;
@@ -15,7 +14,6 @@
   background: linear-gradient(180deg, #f8fafc, #f1f5f9);
 }
 
-/* Builder Card */
 .builder-container {
   width: 100%;
   max-width: 900px;
@@ -25,7 +23,6 @@
   padding: 28px;
 }
 
-/* Title Area */
 .title-container {
   display: flex;
   justify-content: space-between;
@@ -46,7 +43,6 @@
   margin: 0;
 }
 
-/* Clear Build Button */
 .clear-build-btn {
   background: #fef2f2;
   color: #dc2626;
@@ -65,7 +61,6 @@
   box-shadow: 0 3px 10px rgba(220, 38, 38, 0.15);
 }
 
-/* Total Price */
 .total-price {
   font-size: 1.1rem;
   font-weight: 700;
@@ -76,7 +71,6 @@
   box-shadow: 0 3px 8px rgba(249, 115, 22, 0.25);
 }
 
-/* Component List */
 .component-list {
   display: flex;
   flex-direction: column;
@@ -108,7 +102,6 @@
   object-fit: contain;
 }
 
-/* Info Section */
 .component-info {
   flex: 1;
 }
@@ -135,7 +128,6 @@
   color: #1e293b;
 }
 
-/* Price + Button */
 .component-action {
   display: flex;
   flex-direction: column;
@@ -167,7 +159,7 @@
   box-shadow: 0 4px 12px rgba(168, 167, 193, 0.3);
 }
 
-/* Animation */
+/* fade in animation */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
