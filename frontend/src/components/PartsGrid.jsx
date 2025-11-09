@@ -20,7 +20,7 @@ const parts = [
 
 const PartsGrid = () => (
   <section className="parts-grid-section fade-in">
-    <h2>Select Your Components</h2>
+    <h2>Choose Your Components</h2>
     <div className="parts-grid">
       {parts.map((part, index) => (
         <Link to={part.name} key={part.name}>

@@ -168,6 +168,49 @@ const sites = [
   }
 ];
 
+// Endpoint: Web scraping price comparison
+app.get("/search/:query", async (req, res) => {
+  const query = req.params.query;
+  console.log(`Searching for products: "${query}"`);
+
+  try {
+    const promises = sites.map(async (site) => {
+      try {
+        console.log(`Fetching data from ${site.name}...`);
+        const { data, status } = await axios.get(site.url(query), { headers, timeout: 15000, maxRedirects: 5, validateStatus: () => true });
+        if (status !== 200) {
+          console.warn(`${site.name}: HTTP ${status}`);
+          return [];
+        }
+        const results = await site.parse(data, query);
+        console.log(`${site.name}: Found ${results.length} products`);
+        return results;
+      } catch (error) {
+        console.error(`${site.name} fetch error:`, error.message);
+        return [];
+      }
+    });
+
+    const allResults = await Promise.all(promises);
+    const allProducts = allResults.flat().sort((a, b) => a.priceNum - b.priceNum);
+
+    const totalProducts = allProducts.length;
+    const allPrices = allProducts.map(p => p.priceNum).filter(p => p > 0);
+    const lowestPrice = allPrices.length ? Math.min(...allPrices) : null;
+    const highestPrice = allPrices.length ? Math.max(...allPrices) : null;
+
+    res.json({
+      query,
+      stats: { totalProducts, totalSites: sites.length, lowestPrice, highestPrice },
+      products: allProducts
+    });
+
+  } catch (err) {
+    console.error("Search endpoint error:", err.message);
+    res.status(500).json({ error: "Failed to fetch search results", message: err.message });
+  }
+});
+
 // Serve product images by product ID
 app.get('/images/by-id/:productid', (req, res) => {
   const { productid } = req.params;
@@ -263,7 +306,7 @@ app.post("/chat", async (req, res) => {
   console.log(message);
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const structuredPrompt = `Based on this request: "${message}"
 
@@ -292,49 +335,6 @@ Total: "[total] taka"
   } catch (err) {
     console.error(err.message || err);
     res.status(500).json({ error: err.message || "Error fetching from Gemini API" });
-  }
-});
-
-// Endpoint: Web scraping price comparison
-app.get("/search/:query", async (req, res) => {
-  const query = req.params.query;
-  console.log(`Searching for products: "${query}"`);
-
-  try {
-    const promises = sites.map(async (site) => {
-      try {
-        console.log(`Fetching data from ${site.name}...`);
-        const { data, status } = await axios.get(site.url(query), { headers, timeout: 15000, maxRedirects: 5, validateStatus: () => true });
-        if (status !== 200) {
-          console.warn(`${site.name}: HTTP ${status}`);
-          return [];
-        }
-        const results = await site.parse(data, query);
-        console.log(`${site.name}: Found ${results.length} products`);
-        return results;
-      } catch (error) {
-        console.error(`${site.name} fetch error:`, error.message);
-        return [];
-      }
-    });
-
-    const allResults = await Promise.all(promises);
-    const allProducts = allResults.flat().sort((a, b) => a.priceNum - b.priceNum);
-
-    const totalProducts = allProducts.length;
-    const allPrices = allProducts.map(p => p.priceNum).filter(p => p > 0);
-    const lowestPrice = allPrices.length ? Math.min(...allPrices) : null;
-    const highestPrice = allPrices.length ? Math.max(...allPrices) : null;
-
-    res.json({
-      query,
-      stats: { totalProducts, totalSites: sites.length, lowestPrice, highestPrice },
-      products: allProducts
-    });
-
-  } catch (err) {
-    console.error("Search endpoint error:", err.message);
-    res.status(500).json({ error: "Failed to fetch search results", message: err.message });
   }
 });
 

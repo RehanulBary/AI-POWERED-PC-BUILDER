@@ -12,7 +12,6 @@ export default function SearchedProducts() {
     return (
         <>
             <Header />
-            
             <div className='your_search'>Your searched components</div>
             <div className='whole-search'>
                 <div className="searchedp">
@@ -21,8 +20,7 @@ export default function SearchedProducts() {
                     ) : (
                         <Holder products={searchedProducts} />
                     )}
-                </div>
-                
+                </div>  
             </div>
             <Footer/>
         </>

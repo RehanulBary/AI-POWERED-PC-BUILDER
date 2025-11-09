@@ -1,10 +1,10 @@
-/* Motherboard Styles (mobo.css) */
+/* mobo.css for all products , a common css file */
 
 :root {
-  --primary-color: #0056d6; /* professional sapphire blue */
+  --primary-color: #0056d6; 
   --primary-hover: #0041a8;
   --primary-light: #e8f1ff;
-  --accent-color: #00b38f; /* optional success tint (greenish cyan) */
+  --accent-color: #00b38f; 
   --text-main: #1d1d1f;
   --text-muted: #555;
   --border-color: #dcdcdc;
@@ -13,7 +13,28 @@
   --popup-overlay: rgba(0, 0, 0, 0.45);
 }
 
-/* === Layout === */
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Layout */
 .item-main-layout {
   display: flex;
   gap: 32px;
@@ -21,6 +42,7 @@
   margin: 0 24px;
   padding: 20px 0;
   background-color: var(--bg-light);
+  animation: fadeInUp 0.6s ease forwards;
 }
 
 .item-title {
@@ -30,19 +52,21 @@
   font-weight: 700;
   color: var(--text-main);
   letter-spacing: 0.3px;
+  animation: fadeInUp 0.5s ease forwards;
 }
 
-/* === Sidebar Filter === */
+/* Sidebar Filter */
 .item-filter-section {
   width: 260px;
   background: var(--bg-surface);
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
   font-size: 15px;
   height: fit-content;
   position: sticky;
   top: 20px;
+  animation: fadeInUp 0.6s ease forwards;
 }
 
 .item-filter-section h4 {
@@ -98,9 +122,10 @@
   accent-color: var(--primary-color);
 }
 
-/* === Sort Section === */
 .list-section {
   flex: 1;
+  animation: fadeInUp 0.6s ease 0.1s forwards;
+  opacity: 0;
 }
 
 .sort-dropdown {
@@ -112,7 +137,9 @@
   background: var(--bg-surface);
   padding: 12px 16px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  animation: fadeInUp 0.6s ease 0.15s forwards;
+  opacity: 0;
 }
 
 .sort-label {
@@ -143,7 +170,6 @@
   box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.15);
 }
 
-/* === Product Grid === */
 .list-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -156,15 +182,26 @@
   border-radius: 12px;
   padding: 16px;
   background-color: var(--bg-surface);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
 }
 
+.item-card:nth-child(1) { animation-delay: 0.2s; }
+.item-card:nth-child(2) { animation-delay: 0.25s; }
+.item-card:nth-child(3) { animation-delay: 0.3s; }
+.item-card:nth-child(4) { animation-delay: 0.35s; }
+.item-card:nth-child(5) { animation-delay: 0.4s; }
+.item-card:nth-child(6) { animation-delay: 0.45s; }
+.item-card:nth-child(7) { animation-delay: 0.5s; }
+.item-card:nth-child(n+8) { animation-delay: 0.55s; }
+
 .item-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(0, 86, 214, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 14px 28px rgba(0, 86, 214, 0.25);
   border-color: var(--primary-color);
 }
 
@@ -212,7 +249,6 @@
   margin-top: 12px;
 }
 
-/* === Buttons === */
 .add-to-builder-btnn,
 .learn-more-btn {
   flex: 1;
@@ -257,7 +293,6 @@
   color: var(--primary-color);
 }
 
-/* === Popup Overlay === */
 .item-popup-overlay {
   position: fixed;
   top: 0;
@@ -292,11 +327,13 @@
   transition: all 0.3s ease;
   max-height: 85vh;
   overflow-y: auto;
+  animation: fadeInUp 0.4s ease forwards;
 }
 
 .item-popup-overlay.active .item-popup {
   opacity: 1;
   transform: scale(1) translateY(0);
+  animation: fadeInUp 0.4s ease forwards;
 }
 
 .close-popup-btn {
@@ -322,10 +359,11 @@
   color: var(--text-main);
 }
 
-/* === Popup Content === */
 .item-popup-content {
   display: flex;
   gap: 28px;
+  animation: fadeInUp 0.5s ease 0.1s forwards;
+  opacity: 0;
 }
 
 .item-popup-img {
@@ -365,7 +403,6 @@
   margin-top: 8px;
 }
 
-/* === Popup Actions === */
 .item-popup-actions {
   display: flex;
   justify-content: flex-end;
@@ -373,6 +410,8 @@
   margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid var(--border-color);
+  animation: fadeInUp 0.5s ease 0.2s forwards;
+  opacity: 0;
 }
 
 .item-popup-actions button {
@@ -406,7 +445,6 @@
   color: #fff;
 }
 
-/* === Responsive === */
 @media (max-width: 768px) {
   .item-main-layout {
     flex-direction: column;

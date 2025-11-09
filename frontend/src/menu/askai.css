@@ -5,7 +5,6 @@
   min-height: 100vh;
 }
 
-/* General Styles and Layout  */
 .askai-main {
   background-color: #f8f9fa;
   flex: 1;
@@ -20,7 +19,9 @@
   background-color: #ffffff;
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.15),  
+    0 6px 12px rgba(0, 0, 0, 0.08);   
   max-width: 600px;
   width: 100%;
   text-align: center;
@@ -32,6 +33,7 @@
   transform: translateY(20px);
   animation: fadeInUp 0.6s ease forwards;
 }
+
 
 /*  Typography  */
 .generator-container h1 {

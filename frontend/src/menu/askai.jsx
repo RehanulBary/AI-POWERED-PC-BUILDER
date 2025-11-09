@@ -79,7 +79,7 @@ export default function AskAI() {
       <Header />
       <main className="askai-main">
         <div className="generator-container">
-          <h1>AI PC Build Generator</h1>
+          <h1>AI PC Builder</h1>
           <p>Select your primary use case and enter your budget to get a custom PC build suggestion.</p>
           
           <form onSubmit={generateBuild} className="build-form">
