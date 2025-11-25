@@ -27,7 +27,6 @@ function GPU() {
     { label: "৳120,000+", value: "30-100" },
   ];
 
-  // Fetch GPU Data
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -42,7 +41,6 @@ function GPU() {
     fetchItems();
   }, []);
 
-  // Filter Changes
   const handleFilterChange = (type, value) => {
     setFilters((prev) => {
       if (type === "brand" || type === "vram") {
@@ -58,13 +56,11 @@ function GPU() {
     });
   };
 
-  // Sort Handler
   const handleSortChange = (order) => setSortOrder(order);
 
   const handleLearnMore = (gpu) => setSelectedItem(gpu);
   const handleClosePopup = () => setSelectedItem(null);
 
-  // Filtering
   const filteredItems = items.filter((item) => {
     if (filters.brand.length && !filters.brand.includes(item.brand))
       return false;

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useBuilder } from "../BuilderContext";
 
 export default function Builder() {
-  const { builder, clearBuilder } = useBuilder();
+  const { builder, clearBuilder, removeComponent } = useBuilder();
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -24,6 +24,16 @@ export default function Builder() {
     setTotalPrice(total);
   }, [builder]);
 
+  const components = [
+    { key: "cpu", label: "Processor", icon: cpuIcon, requirement: "Select First", link: "/cpu" },
+    { key: "mobo", label: "Motherboard", icon: motherboardIcon, requirement: "Select After CPU", link: "/motherboard" },
+    { key: "ram", label: "RAM", icon: ramIcon, requirement: "Select After CPU", link: "/ram" },
+    { key: "ssd", label: "Storage", icon: ssdIcon, link: "/ssd" },
+    { key: "gpu", label: "Graphics Card", icon: gpuIcon, link: "/gpu" },
+    { key: "psu", label: "Power Supply", icon: psuIcon, link: "/psu" },
+    { key: "case", label: "Casing", icon: caseIcon, link: "/case" },
+  ];
+
   return (
     <div className="builder-page-wrapper">
       <Header />
@@ -32,145 +42,46 @@ export default function Builder() {
           <div className="title-container">
             <div className="title-left">
               <p className="title">Build Your Own PC</p>
-              <button className="clear-build-btn" onClick={clearBuilder}>
-                ⟳ Clear Build
-              </button>
+              <button className="clear-build-btn" onClick={clearBuilder}>⟳ Clear Build</button>
             </div>
             <p className="total-price">৳{totalPrice}</p>
           </div>
 
           <div className="component-list">
-            {/* CPU */}
-            <div
-              className="component-card stagger"
-              style={{ animationDelay: "0.1s" }}
-            >
-              <img src={cpuIcon} alt="CPU Icon" />
-              <div className="component-info">
-                <p className="comp-title">
-                  Processor <span className="required">Select First</span>
-                </p>
-                <p className="name">{builder.cpu?.name || "Not selected"}</p>
+            {components.map((comp, index) => (
+              <div
+                key={comp.key}
+                className="component-card stagger"
+                style={{ animationDelay: `${0.1 * (index + 1)}s` }}
+              >
+                <img src={comp.icon} alt={`${comp.label} Icon`} />
+                <div className="component-info">
+                  <p className="comp-title">
+                    {comp.label}
+                    {comp.requirement && <span className="required">{comp.requirement}</span>}
+                  </p>
+                  <p className="name">{builder[comp.key]?.name || "Not selected"}</p>
+                </div>
+                <div className="component-action">
+                  <p className="price">৳{builder[comp.key]?.price || 0}</p>
+                  <div className="action-buttons">
+                    {builder[comp.key] && (
+                      <button
+                        className="clear-item-btn"
+                        onClick={() => removeComponent(comp.key)}
+                      >
+                        ✕ Clear
+                      </button>
+                    )}
+                    <Link to={comp.link}>
+                      <button className="select-button">
+                        {builder[comp.key] ? "Change" : "Choose"}
+                      </button>
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="component-action">
-                <p className="price">৳{builder.cpu?.price || 0}</p>
-                <Link to="/cpu">
-                  <button className="select-button">Choose</button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Motherboard */}
-            <div
-              className="component-card stagger"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <img src={motherboardIcon} alt="MOBO Icon" />
-              <div className="component-info">
-                <p className="comp-title">
-                  Motherboard <span className="required">Select After CPU</span>
-                </p>
-                <p className="name">{builder.mobo?.name || "Not selected"}</p>
-              </div>
-              <div className="component-action">
-                <p className="price">৳{builder.mobo?.price || 0}</p>
-                <Link to="/motherboard">
-                  <button className="select-button">Choose</button>
-                </Link>
-              </div>
-            </div>
-
-            {/* RAM */}
-            <div
-              className="component-card stagger"
-              style={{ animationDelay: "0.3s" }}
-            >
-              <img src={ramIcon} alt="RAM Icon" />
-              <div className="component-info">
-                <p className="comp-title">
-                  RAM <span className="required">Select After CPU</span>
-                </p>
-                <p className="name">{builder.ram?.name || "Not selected"}</p>
-              </div>
-              <div className="component-action">
-                <p className="price">৳{builder.ram?.price || 0}</p>
-                <Link to="/ram">
-                  <button className="select-button">Choose</button>
-                </Link>
-              </div>
-            </div>
-
-            {/* SSD */}
-            <div
-              className="component-card stagger"
-              style={{ animationDelay: "0.4s" }}
-            >
-              <img src={ssdIcon} alt="SSD Icon" />
-              <div className="component-info">
-                <p className="comp-title">Storage</p>
-                <p className="name">{builder.ssd?.name || "Not selected"}</p>
-              </div>
-              <div className="component-action">
-                <p className="price">৳{builder.ssd?.price || 0}</p>
-                <Link to="/ssd">
-                  <button className="select-button">Choose</button>
-                </Link>
-              </div>
-            </div>
-
-            {/* GPU */}
-            <div
-              className="component-card stagger"
-              style={{ animationDelay: "0.5s" }}
-            >
-              <img src={gpuIcon} alt="GPU Icon" />
-              <div className="component-info">
-                <p className="comp-title">Graphics Card</p>
-                <p className="name">{builder.gpu?.name || "Not selected"}</p>
-              </div>
-              <div className="component-action">
-                <p className="price">৳{builder.gpu?.price || 0}</p>
-                <Link to="/gpu">
-                  <button className="select-button">Choose</button>
-                </Link>
-              </div>
-            </div>
-
-            {/* PSU */}
-            <div
-              className="component-card stagger"
-              style={{ animationDelay: "0.6s" }}
-            >
-              <img src={psuIcon} alt="PSU Icon" />
-              <div className="component-info">
-                <p className="comp-title">Power Supply</p>
-                <p className="name">{builder.psu?.name || "Not selected"}</p>
-              </div>
-              <div className="component-action">
-                <p className="price">৳{builder.psu?.price || 0}</p>
-                <Link to="/psu">
-                  <button className="select-button">Choose</button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Case */}
-            <div
-              className="component-card stagger"
-              style={{ animationDelay: "0.7s" }}
-            >
-              <img src={caseIcon} alt="Case Icon" />
-              <div className="component-info">
-                <p className="comp-title">Casing</p>
-                <p className="name">{builder.case?.name || "Not selected"}</p>
-              </div>
-              <div className="component-action">
-                <p className="price">৳{builder.case?.price || 0}</p>
-                <Link to="/case">
-                  <button className="select-button">Choose</button>
-                </Link>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

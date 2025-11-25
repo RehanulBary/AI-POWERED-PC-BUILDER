@@ -21,6 +21,11 @@ export const BuilderProvider = ({ children }) => {
     setBuilder(prev => ({ ...prev, [type]: null }));
   };
 
+  const removeComponent = (key) => {
+    setBuilder((prev) => ({ ...prev, [key]: null }));
+  };
+
+
   const clearBuilder = () => {
     setBuilder({
       cpu: null,
@@ -34,7 +39,7 @@ export const BuilderProvider = ({ children }) => {
   };
 
   return (
-    <BuilderContext.Provider value={{ builder, addToBuilder, removeFromBuilder, clearBuilder }}>
+    <BuilderContext.Provider value={{ builder, addToBuilder, removeFromBuilder, clearBuilder,removeComponent }}>
       {children}
     </BuilderContext.Provider>
   );

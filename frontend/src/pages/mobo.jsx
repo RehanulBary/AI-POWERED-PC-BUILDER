@@ -27,6 +27,9 @@ function Motherboard() {
     { label: "৳30,000+", value: "30-100" },
   ];
 
+  const selectedCpu = builder?.cpu || null;
+  const selectedRam = builder?.ram || null;
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -60,6 +63,34 @@ function Motherboard() {
   const handleLearnMore = (mobo) => setSelectedItem(mobo);
   const handleClosePopup = () => setSelectedItem(null);
 
+  const checkMoboCompatibility = (mobo) => {
+    const reasons = [];
+    let isCompatible = true;
+
+    if (selectedCpu) {
+      if (mobo.socket !== selectedCpu.socket) {
+        isCompatible = false;
+        reasons.push(
+          `Socket mismatch: Motherboard uses ${mobo.socket}, CPU uses ${selectedCpu.socket}`
+        );
+      }
+    }
+
+    if (selectedRam) {
+      const ramDdr = selectedRam.ddr || selectedRam.type; 
+      const moboRamType = mobo.ramtype; 
+
+      if (moboRamType !== ramDdr) {
+        isCompatible = false;
+        reasons.push(
+          `RAM type mismatch: Motherboard supports ${moboRamType}, RAM is ${ramDdr}`
+        );
+      }
+    }
+
+    return { isCompatible, reasons };
+  };
+
   const filteredItems = items.filter((item) => {
     if (filters.brand.length && !filters.brand.includes(item.brand)) return false;
     if (filters.socket.length && !filters.socket.includes(item.socket)) return false;
@@ -73,20 +104,131 @@ function Motherboard() {
     return true;
   });
 
-  const sortedItems = [...filteredItems].sort((a, b) => {
-    if (sortOrder === "asc") return a.price - b.price;
-    if (sortOrder === "desc") return b.price - a.price;
-    return 0;
-  });
+  const { supportedMobos, unsupportedMobos } = filteredItems.reduce(
+    (acc, mobo) => {
+      const { isCompatible, reasons } = checkMoboCompatibility(mobo);
+      if (isCompatible) {
+        acc.supportedMobos.push(mobo);
+      } else {
+        acc.unsupportedMobos.push({ ...mobo, incompatibilityReasons: reasons });
+      }
+      return acc;
+    },
+    { supportedMobos: [], unsupportedMobos: [] }
+  );
 
-  const cpuFilteredItems = builder.cpu
-    ? sortedItems.filter((mobo) => mobo.socket === builder.cpu.socket)
-    : sortedItems;
+  const sortItems = (itemList) =>
+    [...itemList].sort((a, b) => {
+      if (sortOrder === "asc") return a.price - b.price;
+      if (sortOrder === "desc") return b.price - a.price;
+      return 0;
+    });
+
+  const sortedSupportedMobos = sortItems(supportedMobos);
+  const sortedUnsupportedMobos = sortItems(unsupportedMobos);
+
+  const getCompatibilityReasonMessage = () => {
+    const reasons = [];
+
+    if (selectedCpu) {
+      reasons.push(
+        <span key="cpu">
+          <strong>CPU:</strong> {selectedCpu.name} (Socket:{" "}
+          <span className="highlight-socket">{selectedCpu.socket}</span>)
+        </span>
+      );
+    }
+
+    if (selectedRam) {
+      const ramDdr = selectedRam.ddr || selectedRam.type;
+      reasons.push(
+        <span key="ram">
+          <strong>RAM:</strong> {selectedRam.name} (Type:{" "}
+          <span className="highlight-ddr">{ramDdr}</span>)
+        </span>
+      );
+    }
+
+    return reasons;
+  };
+
+  const hasSelectedComponents = selectedCpu || selectedRam;
+
+  const renderMoboCard = (item, isSupported = true) => (
+    <div
+      className={`item-card ${!isSupported ? "incompatible-card" : ""}`}
+      key={item.productid}
+    >
+      {!isSupported && (
+        <div className="incompatible-badge">
+          <span>Incompatible</span>
+        </div>
+      )}
+
+      <img
+        src={`http://localhost:3000/images/by-id/${item.productid}`}
+        alt={item.name}
+        className={!isSupported ? "incompatible-img" : ""}
+      />
+
+      <h3>{item.name}</h3>
+      <p>
+        <strong>Brand:</strong> {item.brand}
+      </p>
+      <p>
+        <strong>Chipset:</strong>{" "}
+        {["AM4", "AM5"].includes(item.socket) ? "AMD" : "Intel"}
+      </p>
+      <p>
+        <strong>Socket:</strong> {item.socket}
+      </p>
+      <p>
+        <strong>RAM Type:</strong> {item.ramtype}
+      </p>
+
+      {!isSupported && item.incompatibilityReasons && (
+        <div className="incompatibility-reasons">
+          {item.incompatibilityReasons.map((reason, idx) => (
+            <p key={idx} className="incompatibility-reason">
+              ⚠️ {reason}
+            </p>
+          ))}
+        </div>
+      )}
+
+      <p className="price-of-product">
+        <span className="item-price">৳{item.price}</span>
+      </p>
+
+      <div className="card-actions">
+        <button
+          className={`add-to-builder-btnn ${!isSupported ? "disabled-btn" : ""}`}
+          onClick={() => {
+            if (!isSupported) return;
+            removeFromBuilder("mobo");
+            removeFromBuilder("ram");
+            addToBuilder("mobo", item);
+            navigate("/builder");
+          }}
+          disabled={!isSupported}
+        >
+          {isSupported ? "Add to Builder" : "Incompatible"}
+        </button>
+        <button
+          className="learn-more-btn"
+          onClick={() => handleLearnMore(item)}
+        >
+          Details
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <>
       <Header />
       <h2 className="item-title">Motherboards</h2>
+
       <div className="item-main-layout">
         {/* Filter Sidebar */}
         <aside className="item-filter-section">
@@ -139,7 +281,9 @@ function Motherboard() {
         {/* Main Content */}
         <main className="list-section">
           <div className="sort-dropdown">
-            <label htmlFor="sortOrder" className="sort-label">Sort by:</label>
+            <label htmlFor="sortOrder" className="sort-label">
+              Sort by:
+            </label>
             <select
               id="sortOrder"
               value={sortOrder}
@@ -152,55 +296,93 @@ function Motherboard() {
             </select>
           </div>
 
-          <div className="list-container">
-            {cpuFilteredItems.map((item) => (
-              <div className="item-card" key={item.productid}>
-                <img
-                  src={`http://localhost:3000/images/by-id/${item.productid}`}
-                  alt={item.name}
-                />
-                <h3>{item.name}</h3>
-                <p><strong>Brand:</strong> {item.brand}</p>
-                <p><strong>Chipset:</strong> {["AM4", "AM5"].includes(item.socket) ? "AMD" : "Intel"}</p>
-                <p><strong>Socket:</strong> {item.socket}</p>
-                <p className="price-of-product">
-                  <span className="item-price">৳{item.price}</span>
-                </p>
-                <div className="card-actions">
-                  <button
-                    className="add-to-builder-btnn"
-                    onClick={() => {
-                      removeFromBuilder("mobo");
-                      removeFromBuilder("ram");
-                      addToBuilder("mobo", item);
-                      navigate("/builder");
-                    }}
-                  >
-                    Add to Builder
-                  </button>
-                  <button 
-                    className="learn-more-btn" 
-                    onClick={() => handleLearnMore(item)}
-                  >
-                    Details
-                  </button>
-                </div>
+          {/* Compatibility Reason Section */}
+          {hasSelectedComponents && (
+            <div className="compatibility-reason-section">
+              <div className="compatibility-header">
+                <h3>Filtering based on your selections:</h3>
               </div>
-            ))}
-          </div>
+              <div className="compatibility-details">
+                {getCompatibilityReasonMessage().map((reason, idx) => (
+                  <div key={idx} className="compatibility-item">
+                    {reason}
+                  </div>
+                ))}
+              </div>
+              <div className="compatibility-summary">
+                <span className="supported-count">
+                  {sortedSupportedMobos.length} Compatible
+                </span>
+                
+                <span className="unsupported-count">
+                  {sortedUnsupportedMobos.length} Incompatible
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Conditional Rendering based on selected components */}
+          {hasSelectedComponents ? (
+            <>
+              {/* Supported Motherboards Section */}
+              <div className="section-header supported-header">
+                <h3>Compatible Motherboards ({sortedSupportedMobos.length})</h3>
+                <p className="section-description">
+                  These motherboards are fully compatible with your selected components.
+                </p>
+              </div>
+
+              {sortedSupportedMobos.length > 0 ? (
+                <div className="list-container">
+                  {sortedSupportedMobos.map((item) => renderMoboCard(item, true))}
+                </div>
+              ) : (
+                <div className="no-items-message">
+                  <p>No compatible motherboards found with your current selections.</p>
+                  <p>Try changing your CPU or RAM selection.</p>
+                </div>
+              )}
+
+              {/* Unsupported Motherboards Section */}
+              {sortedUnsupportedMobos.length > 0 && (
+                <>
+                  <div className="section-header unsupported-header">
+                    <h3>Incompatible Motherboards ({sortedUnsupportedMobos.length})</h3>
+                    <p className="section-description">
+                      These motherboards are not compatible with your selected components.
+                    </p>
+                  </div>
+
+                  <div className="list-container incompatible-list">
+                    {sortedUnsupportedMobos.map((item) => renderMoboCard(item, false))}
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="section-header all-items-header">
+                <h3>All Motherboards ({filteredItems.length})</h3>
+                <p className="section-description">
+                  Select a CPU or RAM first to see compatibility filtering.
+                </p>
+              </div>
+
+              <div className="list-container">
+                {sortItems(filteredItems).map((item) => renderMoboCard(item, true))}
+              </div>
+            </>
+          )}
         </main>
       </div>
 
       {/* Modal Popup */}
-      {selectedItem && (
-        <div 
-          className="item-popup-overlay active" 
-          onClick={handleClosePopup}
-        >
-          <div 
-            className="item-popup" 
-            onClick={(e) => e.stopPropagation()}
-          >
+      <div
+        className={`item-popup-overlay ${selectedItem ? "active" : ""}`}
+        onClick={handleClosePopup}
+      >
+        {selectedItem && (
+          <div className="item-popup" onClick={(e) => e.stopPropagation()}>
             <button className="close-popup-btn" onClick={handleClosePopup}>
               ✕
             </button>
@@ -212,38 +394,89 @@ function Motherboard() {
               />
               <div className="item-popup-info">
                 <h3>{selectedItem.name}</h3>
-                <p><strong>Brand:</strong> {selectedItem.brand}</p>
-                <p><strong>Socket:</strong> {selectedItem.socket}</p>
-                <p><strong>Form Factor:</strong> {selectedItem.formfactor}</p>
-                <p><strong>RAM Slots:</strong> {selectedItem.ramslot} x {selectedItem.ramtype}</p>
-                <p><strong>Supported CPU:</strong> {selectedItem.supportedcpu}</p>
-                <p><strong>PCIe Version:</strong> {selectedItem.pcie}.0</p>
+                <p>
+                  <strong>Brand:</strong> {selectedItem.brand}
+                </p>
+                <p>
+                  <strong>Socket:</strong> {selectedItem.socket}
+                </p>
+                <p>
+                  <strong>Form Factor:</strong> {selectedItem.formfactor}
+                </p>
+                <p>
+                  <strong>RAM Slots:</strong> {selectedItem.ramslot} x{" "}
+                  {selectedItem.ramtype}
+                </p>
+                <p>
+                  <strong>Supported CPU:</strong> {selectedItem.supportedcpu}
+                </p>
+                <p>
+                  <strong>PCIe Version:</strong> {selectedItem.pcie}.0
+                </p>
+
+                {/* Show compatibility status in popup */}
+                {hasSelectedComponents && (
+                  <div className="popup-compatibility-status">
+                    {checkMoboCompatibility(selectedItem).isCompatible ? (
+                      <span className="compatible-status">
+                        Compatible with your build
+                      </span>
+                    ) : (
+                      <div className="incompatible-status">
+                        <span>Incompatible</span>
+                        <ul>
+                          {checkMoboCompatibility(selectedItem).reasons.map(
+                            (reason, idx) => (
+                              <li key={idx}>{reason}</li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <p className="item-popup-price">৳{selectedItem.price}</p>
-                
+
                 <div className="item-popup-actions">
-                  <button 
-                    className="learn-more-btn"
-                    onClick={handleClosePopup}
-                  >
+                  <button className="learn-more-btn" onClick={handleClosePopup}>
                     Close
                   </button>
                   <button
-                    className="add-to-builder-btnn"
+                    className={`add-to-builder-btnn ${
+                      hasSelectedComponents &&
+                      !checkMoboCompatibility(selectedItem).isCompatible
+                        ? "disabled-btn"
+                        : ""
+                    }`}
                     onClick={() => {
+                      if (
+                        hasSelectedComponents &&
+                        !checkMoboCompatibility(selectedItem).isCompatible
+                      ) {
+                        return;
+                      }
                       removeFromBuilder("mobo");
                       removeFromBuilder("ram");
                       addToBuilder("mobo", selectedItem);
                       navigate("/builder");
                     }}
+                    disabled={
+                      hasSelectedComponents &&
+                      !checkMoboCompatibility(selectedItem).isCompatible
+                    }
                   >
-                    Add to Builder
+                    {hasSelectedComponents &&
+                    !checkMoboCompatibility(selectedItem).isCompatible
+                      ? "Incompatible"
+                      : "Add to Builder"}
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <Footer />
     </>

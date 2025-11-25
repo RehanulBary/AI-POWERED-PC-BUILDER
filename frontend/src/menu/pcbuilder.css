@@ -82,7 +82,7 @@
   align-items: center;
   justify-content: space-between;
   background: #ffffff;
-  padding: 8px 20px;
+  padding: 3px 20px;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   transition: all 0.3s ease;
@@ -201,4 +201,24 @@
     width: 36px;
     height: 36px;
   }
+}
+.action-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.clear-item-btn {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.clear-item-btn:hover {
+  background: #fee2e2;
+  transform: translateY(-2px);
 }

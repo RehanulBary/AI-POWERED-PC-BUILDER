@@ -25,7 +25,6 @@ function Case() {
     "Fractal Design",
   ];
 
-  // Fetch casing items
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -40,7 +39,6 @@ function Case() {
     fetchItems();
   }, []);
 
-  // Filter logic
   const handleFilterChange = (type, value) => {
     setFilters((prev) => {
       if (type === "brand" || type === "type") {
@@ -54,21 +52,17 @@ function Case() {
     });
   };
 
-  // Sorting logic
   const handleSortChange = (order) => setSortOrder(order);
 
-  // Modal control
   const handleLearnMore = (casing) => setSelectedItem(casing);
   const handleClosePopup = () => setSelectedItem(null);
 
-  // Apply filters
   const filteredItems = items.filter((item) => {
     if (filters.brand.length && !filters.brand.includes(item.brand)) return false;
     if (filters.type.length && !filters.type.includes(item.type)) return false;
     return true;
   });
 
-  // Apply sorting
   const sortedItems = [...filteredItems].sort((a, b) => {
     if (sortOrder === "asc") return a.price - b.price;
     if (sortOrder === "desc") return b.price - a.price;
