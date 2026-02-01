@@ -360,7 +360,7 @@ const { builder, addToBuilder, removeFromBuilder, clearBuilder } = useBuilder();
 | `/images/by-id/:id` | GET | Serve product images |
 
 ---
-
+<!-- 
 ## 🚀 Future Enhancements
 
 | Feature | Priority | Description |
@@ -373,7 +373,7 @@ const { builder, addToBuilder, removeFromBuilder, clearBuilder } = useBuilder();
 | Price Alerts | Medium | Notify when prices drop |
 | PDF Export | Low | Export builds as PDF |
 
----
+--- -->
 
 ## 📁 Project Structure
 
